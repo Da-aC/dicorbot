@@ -22,23 +22,12 @@ def run_discord_bot():
     async def on_message(message):
         if message.author == client.user:
             return
-        if message.attachments is not None:
-            for attachment in message.attachments:
-                await attachment.save(attachment.filename)
-                with open(attachment.filename, 'r') as file:
-                    content = file.read()
-                    await message.channel.send(content)
-                filename = message.content.split()[1]
-                with open(filename, 'r') as file:
-                    user_message = file.read()
-                    await send_message(message, user_message, False)
-        else:
-            user_message = str(message.content)
+        user_message = str(message.content)
+        if user_message[0] == '?':
+            user_message = user_message[1:]
             if user_message[0] == '?':
                 user_message = user_message[1:]
-                if user_message[0] == '?':
-                    user_message = user_message[1:]
-                    await send_message(message, user_message, True)
-                else: await send_message(message, user_message, False)
-
+                await send_message(message, user_message, True)
+            else: await send_message(message, user_message, False)
+  
     client.run(TOKEN)
