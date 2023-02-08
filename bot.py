@@ -22,6 +22,8 @@ def run_discord_bot():
     async def on_message(message):
         if message.author == client.user:
             return
+        username = str(message.author)
+        print("mensaje recibido de" + username)
         user_message = str(message.content)
         if user_message[0] == '?':
             user_message = user_message[1:]
