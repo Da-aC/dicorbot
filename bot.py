@@ -1,4 +1,5 @@
 import discord
+import os
 import responses
 
 
@@ -11,10 +12,8 @@ async def send_message(message, user_message, isPrivate):
 
 
 def run_discord_bot():
-    TOKEN = 'MTA3MjYyMjc4NTY3Mjc5MDEyNw.GqCN6o.o7yyoc2p5qkqvh_2-KwfeliFFanDMZ7ywidoes'
+    TOKEN = os.getenv("DISCORD_TOKEN")
     client = discord.Client(intents=discord.Intents.all())
-    bot = discord.Client(command="gpt3", intents = discord.Intents.all())
-
     @client.event
     async def on_ready():
         print("ready")
@@ -23,8 +22,6 @@ def run_discord_bot():
     async def on_message(message):
         if message.author == client.user:
             return
-        username = str(message.author)
-        channel = str(message.channel)
         if message.attachments is not None:
             for attachment in message.attachments:
                 await attachment.save(attachment.filename)

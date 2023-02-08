@@ -1,8 +1,8 @@
 import openai
-
+import os
 
 def handle_response(message) -> str:
-    openai.api_key = "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"
+    openai.api_key = os.getenv("GPT3_TOKEN")
     response = openai.Completion.create(
         model="text-davinci-003",
         prompt=message,
